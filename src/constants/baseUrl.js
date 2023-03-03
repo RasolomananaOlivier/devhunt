@@ -1,6 +1,6 @@
 export let baseURL = "http://localhost:5000";
 
-if (import.meta.env.PROD) {
+if (process.env.NODE_ENV === "production") {
   baseURL = "https://quicktalks-server.up.railway.app";
 }
 

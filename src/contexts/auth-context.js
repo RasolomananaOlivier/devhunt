@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
 import User from "src/services/user";
+import useToken from "src/hooks/use-token";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -61,6 +62,7 @@ export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
+  const token = useToken();
 
   const initialize = async () => {
     // Prevent from calling twice in development mode with React.StrictMode enabled
