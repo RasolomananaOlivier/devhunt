@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
-import User from "src/services/user";
+import User from "src/services/User";
 import useToken from "src/hooks/use-token";
 
 const HANDLERS = {
