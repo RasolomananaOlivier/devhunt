@@ -72,9 +72,10 @@ export const AuthProvider = (props) => {
 
     initialized.current = true;
 
-    const { isAuthenticated, user } = await User.authenticated(token.get());
+    // TODO: change this
+    // const { isAuthenticated, user } = await User.authenticated(token.get());
 
-    // let isAuthenticated = false;
+    let isAuthenticated = true;
 
     // try {
     //   isAuthenticated = window.sessionStorage.getItem("authenticated") === "true";
@@ -83,12 +84,12 @@ export const AuthProvider = (props) => {
     // }
 
     if (isAuthenticated) {
-      // const user = {
-      //   id: "5e86809283e28b96d2d38537",
-      //   avatar: "/assets/avatars/avatar-anika-visser.png",
-      //   name: "Anika Visser",
-      //   email: "anika.visser@devias.io",
-      // };
+      const user = {
+        id: "5e86809283e28b96d2d38537",
+        avatar: "/assets/avatars/avatar-anika-visser.png",
+        name: "Anika Visser",
+        email: "anika.visser@devias.io",
+      };
 
       dispatch({
         type: HANDLERS.INITIALIZE,
@@ -147,23 +148,35 @@ export const AuthProvider = (props) => {
     //   email: 'anika.visser@devias.io'
     // };
     const user = {};
-    const user_data = await User.login(user);
+    try {
+      const user_data = await User.login(user);
 
-    token.save(user_data.token);
+      token.save(user_data.token);
 
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user_data,
-    });
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: user_data,
+      });
+    } catch (error) {
+      console.log("====================================");
+      console.log(error);
+      console.log("====================================");
+    }
   };
 
   const signUp = async (email, name, password) => {
     const user = {};
-    const data = await User.register(user);
 
-    token.save(data.token);
+    try {
+      const data = await User.register(user);
+      token.save(data.token);
+      return data;
+    } catch (error) {
+      console.log("====================================");
+      console.log(error);
+      console.log("====================================");
+    }
 
-    return data;
     // throw new Error('Sign up is not implemented');
   };
 
